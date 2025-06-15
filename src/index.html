@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+  <head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="大きな数とタイピングを同時に学ぶアプリです。">
+    <title>億千万タイピング</title>
+    <meta property="og:title" content="億千万タイピング">
+    <meta property="og:site_name" content="億千万タイピング">
+    <meta property="og:description" content="大きな数とタイピングを同時に学ぶアプリです。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://marmooo.github.io/okusenman-typing/">
+    <meta property="og:image" content="https://marmooo.github.io/okusenman-typing/favicon/apple-touch-icon.png">
+    <meta name="twitter:card" content="summary">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2179JXDYY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F2179JXDYY');
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/okusenman-typing/sw.js');
+        });
+      }
+    </script>
+    <link rel="icon" type="image/png" href="/okusenman-typing/favicon/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/okusenman-typing/favicon/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/okusenman-typing/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/okusenman-typing/favicon/site.webmanifest">
+    <link class="drop-inline-css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link class="inline-css" href="https://cdn.jsdelivr.net/npm/simple-keyboard@3.7.77/build/css/index.min.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+      @font-face {
+        font-family: textar-light;
+        src: local('Textar'),
+          url('https://marmooo.github.io/fonts/textar-light.woff2') format('woff2');
+        font-display: swap;
+      }
+      pre.aa {
+        font-size: 1rem;
+        display: inline-block;
+        overflow: hidden;
+        text-align: left;
+        font-family: textar-light;
+        line-height: 1.1;
+        white-space: pre;
+        word-wrap: normal;
+      }
+      #counter {
+        font-size:10rem; width:12rem; height:12rem; line-height:12rem; border-radius: 50%;
+        background:tomato; color:black; margin:auto; }
+      #aaOuter {
+        height:calc(100vh - 360px); overflow:hidden;
+        background:transparent; display:flex; align-items:center; justify-content:center;
+      }
+      #aa { position:relative; top:0; left:0; margin:auto; }
+      #typePanel { font-variant-ligatures:none; word-wrap: break-word; }
+      #keyboard { touch-action:manipulation; }
+      .hg-theme-default .hg-button { height:50px; font-size:2.5rem; }
+      .hg-theme-default .hg-button.hg-standardBtn[data-skbtn="🌏"] { max-width:80px; }
+      .inputed { color:var(--bs-gray-500); }
+      .guide { background:var(--bs-blue) !important; color:#fff !important; }
+      html[data-bs-theme="dark"] .favicon { filter: invert(1) hue-rotate(180deg); }
+      html[data-bs-theme="dark"] #keyboard { background:var(--bs-gray-900); }
+      html[data-bs-theme="dark"] .hg-button { background:#000; }
+      html[data-bs-theme="dark"] .inputed { color:var(--bs-gray-800); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav id="headerNav" class="navbar navbar-expand">
+        <div class="container flex-wrap">
+          <a class="navbar-brand" href="/okusenman-typing/">
+            <img class="favicon" alt="" src="/okusenman-typing/favicon/favicon.svg" width="32" height="32">
+            億千万タイピング
+          </a>
+          <div class="navbar-nav">
+            <select title="コース" id="gradeOption" class="form-select form-select-sm">
+              <option value="4">〜千</option>
+              <option value="8">〜万</option>
+              <option value="12">〜億</option>
+              <option value="16">〜兆</option>
+              <option value="20">〜京</option>
+              <option value="24">〜垓</option>
+              <option value="72">無量大数</option>
+            </select>
+            <button title="物理/仮想キーボード" id="virtualKeyboard" class="btn p-0 ms-1" type="button">
+              <svg id="virtualKeyboardOn" class="d-none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3H4c-1.1 0-1.99.9-1.99 2L2 15c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 3h2v2h-2V6zm0 3h2v2h-2V9zM8 6h2v2H8V6zm0 3h2v2H8V9zm-1 2H5V9h2v2zm0-3H5V6h2v2zm9 7H8v-2h8v2zm0-4h-2V9h2v2zm0-3h-2V6h2v2zm3 3h-2V9h2v2zm0-3h-2V6h2v2zm-7 15l4-4H8l4 4z"/></svg>
+              <svg id="virtualKeyboardOff" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><g><rect fill="none" height="24" width="24"/><rect fill="none" height="24" width="24"/></g><g><g><path d="M21,14c0-0.55-0.45-1-1-1h-2v2h2C20.55,15,21,14.55,21,14z"/><path d="M20,17h-2v2h2c0.55,0,1-0.45,1-1C21,17.45,20.55,17,20,17z"/><path d="M16,12h-2c-1.1,0-2,0.9-2,2h-1c-0.55,0-1,0.45-1,1v2c0,0.55,0.45,1,1,1h1c0,1.1,0.9,2,2,2h2c0.55,0,1-0.45,1-1v-6 C17,12.45,16.55,12,16,12z"/><path d="M5,13c0-1.1,0.9-2,2-2h1.5c1.93,0,3.5-1.57,3.5-3.5S10.43,4,8.5,4H5C4.45,4,4,4.45,4,5c0,0.55,0.45,1,1,1h3.5 C9.33,6,10,6.67,10,7.5S9.33,9,8.5,9H7c-2.21,0-4,1.79-4,4c0,2.21,1.79,4,4,4h2v-2H7C5.9,15,5,14.1,5,13z"/></g></g></svg>
+            </button>
+            <button title="音楽を再生" id="toggleBGM" class="btn p-0 ms-1" type="button">
+              <svg id="bgmOn" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <svg id="bgmOff" class="d-none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+            </button>
+            <button title="ダークモード切替" id="toggleDarkMode" class="fs-4 btn p-0 ms-1" type="button">🌓</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="container" class="container">
+      <noscript>
+        <div class="alert alert-warning">JavaScript を ON にしてください</div>
+      </noscript>
+      <div id="noTTS" class="alert alert-warning d-none">
+        <p>お使いのブラウザは音声読み上げに対応していません。
+        Firefox for Linux は発話モジュールをインストールしてください。例:
+        </p>
+        <pre><code>sudo apt install speech-dispatcher
+sudo apt install festival speech-dispatcher-festival</code></pre>
+      </div>
+      <div id="infoPanel">
+        <div class="row">
+          <div class="col-md pb-3">
+            <p>大きな数とタイピングを同時に学ぶアプリです。</p>
+            <h6>キーバインド</h6>
+            <table class="table table-sm table-striped">
+              <tbody>
+                <tr><td><kbd>無変換</kbd><kbd class="ms-1">Alt Left</kbd></td><td>ローマ字表示</td></tr>
+                <tr><td><kbd>変換</kbd><kbd class="ms-1">Alt Left</kbd></td><td>音声読み上げ</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="timePanel" class="col-md text-center">
+            <div class="alert alert-info">
+              <div class="d-flex flex-wrap justify-content-center">
+                <div class="h5 text-nowrap me-4 notranslate">
+                  <span id="time">120</span>
+                  <span> / 120 sec</span>
+                </div>
+                <div>
+                  <button id="mode" class="btn btn-secondary btn-sm notranslate" type="button">EASY</button>
+                  <div class="form-check form-check-inline form-switch text-nowrap ms-1">
+                    <input class="form-check-input" type="checkbox" id="guideSwitch">
+                    <label class="form-check-label" for="guideSwitch">ガイド</label>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-2">
+                <button id="startButton" class="btn btm-sm btn-primary" type="button">
+                  <kbd>Space</kbd>
+                  <span class="ms-1">スタート</span>
+                  <kbd class="ms-3">Esc</kbd>
+                  <span class="ms-1">リセット</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="gamePanel">
+        <div id="aaOuter" class="flex-grow-1 notranslate">
+          <pre id="aa" class="aa">　　　　 彡⌒ ミ
+.　/＼. (｀･ω･´) ／ヽ　　一・十・百・千
+　| ● ⊂　　　⊃ ● |　　　万・億・兆
+　ヽ／　/ 　　く　＼ /　　京・垓・秭・穣
+　　　　（ノ⌒ヽ）
+
+　　　　　　　,　 -　 ､
+　　　　　　　＼●／
+　　　　彡⌒ ミ ∩　　溝・澗・正・載・極
+　　　　(｀･／ヽ)ﾂ　　　恒河沙
+　　　　(つ ● |'　　　　阿僧祇
+　　　　/　＼ /
+　　　 ( /￣∪
+
+　　,.　 -　､　　　　　　　　那由他
+　　＼●／ミ　　　　　　　不可思議
+　　　 ∩ω･' )　／ヽ　　　無量大数！
+　　　　ヽ　　 つ. ● |
+　　　　　l　　⊃ ＼ /
+　　　　　し'´
+          </pre>
+        </div>
+        <div id="typePanel" class="alert alert-info mb-0 h1 text-center notranslate">
+          <div id="japanese" class="text-truncate">じゅういちまんよんせんごひゃくじゅうよん</div>
+          <div id="roma" class="text-truncate">
+            <span class="inputed"></span><span class="wanted">j</span><span class="remained">uuichimannyonnsenngohyakujuuyonn</span>
+          </div>
+        </div>
+        <div id="keyboard" class="d-none simple-keyboard notranslate"></div>
+      </div>
+      <div id="scorePanel" class="text-center pb-3 d-none">
+        <h3 class="pt-3">スコア</h3>
+        <div class="text-break pb-3"><span id="clearPoint"></span> <span>点</span></div>
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="notranslate">
+            <pre class="aa">　 　 　　 　 （ 　　　丿　　　　　　　　　_
+　 　 　 　　　(　　　 ' 　丿　　 　 /〉　 | |
+　　　　　　　 , ,'"`,~､';､ )　　　　// ﾐ　| |
+　　　　　　.;'"　　' ,｀ ,. ';,　　　 //彡⌒| |
+　　　　　 ;''＿'_`＿＿＿_;, 　 0,(´･ω･| |
+　　　　　 ＼＿＿＿＿／　 // ヽ　 　|Φ
+　　　　　　　＼＿＿／　　〈/　 　'uー|_|
+　 　 　 　 　　└─┘
+            </pre>
+          </div>
+          <div class="ps-1">スコアだよ！</div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody>
+              <tr><td>総タイプ数</td><td><span id="totalType"></span> <span>回</span></td></tr>
+              <tr><td>スピード</td><td><span id="typeSpeed"></span> <span>回/秒</span></td></tr>
+              <tr><td>ミスタイプ数</td><td><span id="errorType"></span> <span>回</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="countPanel" class="text-center d-none">
+        <div id="counter" class="notranslate"></div>
+        <div class="d-flex justify-content-center">
+          <div class="notranslate">
+            <pre class="aa">
+　　　　 彡⌒ ミ
+　 　／（´・ω・｀）／＼
+　／|￣　∪∪￣|＼／
+　　 |　 　　　　　 |／
+　　 ￣￣￣￣
+            </pre>
+          </div>
+          <div class="ps-1 pt-3">はじまるよ！</div>
+        </div>
+      </div>
+    </main>
+    <footer class="pt-4 alert text-center">
+      <div>
+        <a class="px-1" href="/">Home</a>
+        <a class="px-1" href="/terms/">Terms</a>
+        <a class="px-1" href="https://github.com/marmooo/okusenman-typing">Contact</a>
+      </div>
+      <div class="text-muted">&copy; <a href="https://github.com/marmooo">marmooo</a>
+      </div>
+    </footer>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
