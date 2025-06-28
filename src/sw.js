@@ -1,13 +1,13 @@
-const CACHE_NAME = "2025-06-15 00:00";
+const CACHE_NAME = "2025-06-28 00:00";
 const urlsToCache = [
-  "/kuku-typing/",
-  "/kuku-typing/index.js",
-  "/kuku-typing/mp3/bgm.mp3",
-  "/kuku-typing/mp3/cat.mp3",
-  "/kuku-typing/mp3/correct.mp3",
-  "/kuku-typing/mp3/end.mp3",
-  "/kuku-typing/mp3/keyboard.mp3",
-  "/kuku-typing/favicon/favicon.svg",
+  "/okusenman-typing/",
+  "/okusenman-typing/index.js",
+  "/okusenman-typing/mp3/bgm.mp3",
+  "/okusenman-typing/mp3/cat.mp3",
+  "/okusenman-typing/mp3/correct.mp3",
+  "/okusenman-typing/mp3/end.mp3",
+  "/okusenman-typing/mp3/keyboard.mp3",
+  "/okusenman-typing/favicon/favicon.svg",
   "https://marmooo.github.io/fonts/textar-light.woff2",
 ];
 
