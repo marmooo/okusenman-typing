@@ -539,6 +539,11 @@ function typable() {
     removePrevGuide(prevProblem);
     showGuide(problem.roma[0]);
   }
+
+  const aaOuter = document.getElementById("aaOuter");
+  const typePanel = document.getElementById("typePanel");
+  const keyboardPanel = document.getElementById("keyboard");
+  aaOuter.after(typePanel, keyboardPanel);
 }
 
 function countdown() {
