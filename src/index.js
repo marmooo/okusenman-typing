@@ -191,10 +191,6 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
-  const uttr = new SpeechSynthesisUtterance("");
-  uttr.lang = "en-US";
-  speechSynthesis.speak(uttr);
-
   if (audioContext) {
     audioContext.resume();
   } else {
@@ -547,6 +543,7 @@ function countdown() {
   const keyboardPanel = document.getElementById("keyboard");
   aaOuter.after(typePanel, keyboardPanel);
 
+  loopVoice("", 1); // unlock
   if (countdowning) return;
   countdowning = true;
   if (localStorage.getItem("bgm") == 1) bgm.play();
