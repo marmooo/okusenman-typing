@@ -521,6 +521,7 @@ function typable() {
   aa.textContent = formatNumber(num);
   japaneseNode.textContent = hira;
   const romaji = new Romaji(hira);
+  const roma = romaji.remainedRomaji;
   problem = { hira, roma, romaji, num };
   const children = romaNode.children;
   children[0].textContent = romaji.inputedRomaji;
