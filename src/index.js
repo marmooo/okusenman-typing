@@ -539,14 +539,14 @@ function typable() {
     removePrevGuide(prevProblem);
     showGuide(problem.roma[0]);
   }
+}
 
+function countdown() {
   const aaOuter = document.getElementById("aaOuter");
   const typePanel = document.getElementById("typePanel");
   const keyboardPanel = document.getElementById("keyboard");
   aaOuter.after(typePanel, keyboardPanel);
-}
 
-function countdown() {
   if (countdowning) return;
   countdowning = true;
   if (localStorage.getItem("bgm") == 1) bgm.play();
