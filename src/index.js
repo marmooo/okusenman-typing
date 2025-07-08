@@ -526,7 +526,7 @@ function typable() {
   children[1].textContent = romaji.remainedRomaji[0];
   children[2].textContent = romaji.remainedRomaji.slice(1);
 
-  if (mode.textContent == "EASY") speak(problem.hira);
+  if (mode.textContent == "EASY") speak(problem.roma);
   const visibility = (mode.textContent == "EASY") ? "visible" : "hidden";
   changeVisibility(visibility);
   resizeFontSize(aa);
