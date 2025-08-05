@@ -542,7 +542,7 @@ function countdown() {
   const keyboardPanel = document.getElementById("keyboard");
   aaOuter.after(typePanel, keyboardPanel);
 
-  speak(""); // unlock
+  speak("Ready"); // unlock
   if (countdowning) return;
   countdowning = true;
   if (localStorage.getItem("bgm") == 1) bgm.play();
