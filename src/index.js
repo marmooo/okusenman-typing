@@ -413,9 +413,9 @@ function typeEventKey(key) {
           cleared.indexOf(unit) + unit.length,
         );
         const ja = japanese.textContent;
-        const unitReading = unitReadings[unit];
+        const unitKanji = unitKanjis[unit];
         japanese.textContent = ja.slice(
-          ja.indexOf(unitReading) + unitReading.length,
+          ja.indexOf(unitKanji) + unitKanji.length,
         );
       }
       for (const key of prevNode.children.keys()) {
@@ -515,12 +515,13 @@ function typable() {
     ? getRandomBigInt(digits - 15, digits)
     : getRandomBigInt(digits - 3, digits);
   const hira = bigintToHiragana(num);
+  const kanji = bigintToKanji(num);
   const prevProblem = problem;
   aa.textContent = formatNumber(num);
-  japaneseNode.textContent = hira;
+  japaneseNode.textContent = kanji;
   const romaji = new Romaji(hira);
   const roma = romaji.remainedRomaji;
-  problem = { hira, roma, romaji, num };
+  problem = { kanji, roma, romaji, num };
   const children = romaNode.children;
   children[0].textContent = romaji.inputedRomaji;
   children[1].textContent = romaji.remainedRomaji[0];
@@ -648,69 +649,69 @@ function changeMode(event) {
   changeVisibility(visibility);
 }
 
-// function bigintToKanji(num) {
-//   if (num === 0n) return "零";
-//   const kanjiDigits = [
-//     "零",
-//     "一",
-//     "二",
-//     "三",
-//     "四",
-//     "五",
-//     "六",
-//     "七",
-//     "八",
-//     "九",
-//   ];
-//   const units = ["", "十", "百", "千"];
-//   const bigUnits = [
-//     "",
-//     "万",
-//     "億",
-//     "兆",
-//     "京",
-//     "垓",
-//     "秭",
-//     "穣",
-//     "溝",
-//     "澗",
-//     "正",
-//     "載",
-//     "極",
-//     "恒河沙",
-//     "阿僧祇",
-//     "那由他",
-//     "不可思議",
-//     "無量大数",
-//   ];
-//   const split4Digits = [];
-//   let n = num;
-//   while (n > 0n) {
-//     split4Digits.push(n % 10000n);
-//     n /= 10000n;
-//   }
-//   const to4Kanji = (n4) => {
-//     let result = "";
-//     const str = n4.toString().padStart(4, "0");
-//     for (let i = 0; i < 4; i++) {
-//       const digit = +str[i];
-//       if (digit !== 0) {
-//         if (!(digit === 1 && i === 0 && i === 0)) {
-//           result += (digit === 1 && i !== 0) ? "" : kanjiDigits[digit];
-//         }
-//         result += units[3 - i];
-//       }
-//     }
-//     return result;
-//   };
-//   let result = "";
-//   for (let i = split4Digits.length - 1; i >= 0; i--) {
-//     const part = split4Digits[i];
-//     if (part === 0n) continue;
-//     result += to4Kanji(part) + bigUnits[i] + "\n";
-//   }
-//   return result;
-// }
+function bigintToKanji(num) {
+  if (num === 0n) return "零";
+  const kanjiDigits = [
+    "零",
+    "一",
+    "二",
+    "三",
+    "四",
+    "五",
+    "六",
+    "七",
+    "八",
+    "九",
+  ];
+  const units = ["", "十", "百", "千"];
+  const bigUnits = [
+    "",
+    "万",
+    "億",
+    "兆",
+    "京",
+    "垓",
+    "秭",
+    "穣",
+    "溝",
+    "澗",
+    "正",
+    "載",
+    "極",
+    "恒河沙",
+    "阿僧祇",
+    "那由他",
+    "不可思議",
+    "無量大数",
+  ];
+  const split4Digits = [];
+  let n = num;
+  while (n > 0n) {
+    split4Digits.push(n % 10000n);
+    n /= 10000n;
+  }
+  const to4Kanji = (n4) => {
+    let result = "";
+    const str = n4.toString().padStart(4, "0");
+    for (let i = 0; i < 4; i++) {
+      const digit = +str[i];
+      if (digit !== 0) {
+        if (!(digit === 1 && i === 0 && i === 0)) {
+          result += (digit === 1 && i !== 0) ? "" : kanjiDigits[digit];
+        }
+        result += units[3 - i];
+      }
+    }
+    return result;
+  };
+  let result = "";
+  for (let i = split4Digits.length - 1; i >= 0; i--) {
+    const part = split4Digits[i];
+    if (part === 0n) continue;
+    result += to4Kanji(part) + bigUnits[i] + "\n";
+  }
+  return result;
+}
 
 function bigintToHiragana(num) {
   if (num === 0n) return "ぜろ";
@@ -815,30 +816,55 @@ function formatNumber(n) {
 
 const unitEndRegexp =
   /(man|(?<!r)oku|chou|tyou|kei|gai|(?:si|shi)|jou|kou|kan|sei|sai|goku|gouga(?:sya|sha)|asougi|nayuta|(?:fuka|huka)(?:si|shi)gi|muryoutaisuu)$/i;
-const unitReadings = {
-  man: "まん",
-  oku: "おく",
-  chou: "ちょう",
-  tyou: "ちょう",
-  kei: "けい",
-  gai: "がい",
-  si: "し",
-  shi: "し",
-  jou: "じょう",
-  kou: "こう",
-  kan: "かん",
-  sei: "せい",
-  sai: "さい",
-  goku: "ごく",
-  gougasya: "ごうがしゃ",
-  gougasha: "ごうがしゃ",
-  asougi: "あそうぎ",
-  nayuta: "なゆた",
-  fukashigi: "ふかしぎ",
-  fukasigi: "ふかしぎ",
-  hukashigi: "ふかしぎ",
-  hukasigi: "ふかしぎ",
-  muryoutaisuu: "むりょうたいすう",
+// const unitReadings = {
+//   man: "まん",
+//   oku: "おく",
+//   chou: "ちょう",
+//   tyou: "ちょう",
+//   kei: "けい",
+//   gai: "がい",
+//   si: "し",
+//   shi: "し",
+//   jou: "じょう",
+//   kou: "こう",
+//   kan: "かん",
+//   sei: "せい",
+//   sai: "さい",
+//   goku: "ごく",
+//   gougasya: "ごうがしゃ",
+//   gougasha: "ごうがしゃ",
+//   asougi: "あそうぎ",
+//   nayuta: "なゆた",
+//   fukashigi: "ふかしぎ",
+//   fukasigi: "ふかしぎ",
+//   hukashigi: "ふかしぎ",
+//   hukasigi: "ふかしぎ",
+//   muryoutaisuu: "むりょうたいすう",
+// };
+const unitKanjis = {
+  man: "万",
+  oku: "億",
+  chou: "兆",
+  tyou: "兆",
+  kei: "京",
+  gai: "垓",
+  si: "秭",
+  shi: "秭",
+  jou: "穣",
+  kou: "溝",
+  kan: "澗",
+  sei: "正",
+  sai: "載",
+  goku: "極",
+  gougasya: "恒河沙",
+  gougasha: "恒河沙",
+  asougi: "阿僧祇",
+  nayuta: "那由他",
+  fukashigi: "不可思議",
+  fukasigi: "不可思議",
+  hukashigi: "不可思議",
+  hukasigi: "不可思議",
+  muryoutaisuu: "無量大数",
 };
 
 resizeFontSize(aa);
