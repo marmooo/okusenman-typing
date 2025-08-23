@@ -696,10 +696,11 @@ function bigintToKanji(num) {
     for (let i = 0; i < 4; i++) {
       const digit = +str[i];
       if (digit !== 0) {
-        if (!(digit === 1 && i === 0 && i === 0)) {
-          result += (digit === 1 && i !== 0) ? "" : kanjiDigits[digit];
+        if (digit === 1 && i < 3) {
+          result += units[3 - i];
+        } else {
+          result += kanjiDigits[digit] + units[3 - i];
         }
-        result += units[3 - i];
       }
     }
     return result;
@@ -708,7 +709,7 @@ function bigintToKanji(num) {
   for (let i = split4Digits.length - 1; i >= 0; i--) {
     const part = split4Digits[i];
     if (part === 0n) continue;
-    result += to4Kanji(part) + bigUnits[i] + "\n";
+    result += to4Kanji(part) + bigUnits[i];
   }
   return result;
 }
